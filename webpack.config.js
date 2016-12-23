@@ -5,7 +5,7 @@ module.exports = {
   devtool: 'source-map',
 
   entry: [
-    path.join(__dirname, '/client/components/index.js')
+    path.join(__dirname, '/client/index.js')
   ],
 
   output: {
