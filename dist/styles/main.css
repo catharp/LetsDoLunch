@@ -9,6 +9,6 @@ nav li {
   float: right;
 }
 
-nav a:hover, a:active, a:focus {
+nav a:hover, nav a:active, nav a:focus {
   text-decoration: none;
 }
