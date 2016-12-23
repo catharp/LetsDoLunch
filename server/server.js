@@ -1,10 +1,11 @@
 // configure server
+var dotenv = require('dotenv').config({path: '../.env'});
 var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path');
 var webpack = require('webpack');
 var webpackDevMiddleware = require("webpack-dev-middleware");
-var webpackConfig = require('../webpack.config.js')
+var webpackConfig = require('../webpack.config.js');
 
 
 var port = 3000;

@@ -1,5 +1,8 @@
 node_modules/
+
 lib/
 client/npm-debug.log
 
-config.js
+dist/bundle.js
+
+.env
