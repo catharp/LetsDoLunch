@@ -59,7 +59,6 @@ module.exports.getPhoto = function(req, res) {
 }
 
 module.exports.getPreference = function(req,res) {
-  console.log('post req received from the front end', req.body);
   res.send();
 }
 
