@@ -35,9 +35,9 @@ export default class Recommend extends Component {
           <Map />
         </div>
         <div className='col-md-5 single-rec'>
-          <CurrentListing onClick={() => showDetail()} {...singleListing}  />
-          <div> { detailVisible ? <ListingDetail {...singleListing} /> : null}
-          </div>
+          <CurrentListing onClick={() => showDetail()} {...singleListing} />
+          { detailVisible ? null : <h5 onClick={() => showDetail()}>more info</h5> }
+          { detailVisible ? <ListingDetail {...singleListing} /> : null }
           <div>
             <RejectButton onClick={() => rejectPlace(singleListing)} />
             <AcceptButton onClick={() => alert('Enjoy your lunch!')} />
