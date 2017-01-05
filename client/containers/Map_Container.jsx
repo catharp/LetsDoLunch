@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { changeBounds, changeOrigin } from '../actions/map_action';
+import { updateRouteInfo } from '../actions/action_single_place';
 import Map_Component from '../components/Map_Component.jsx';
 
 class Map_Container extends Component {
@@ -21,6 +22,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
   changeBounds: (newBounds) => {dispatch(changeBounds(newBounds))},
   changeOrigin: (newOrigin) => {dispatch(changeOrigin(newOrigin))},
+  updateRouteInfo: (distance, duration) => {dispatch(updateRouteInfo(distance, duration))}
 })
 
 Map_Container = connect(

@@ -12,7 +12,7 @@ export default class Map_Component extends Component {
   }
 
   componentDidUpdate() {
-    let { origin, destination } = this.props;
+    let { origin, destination, updateRouteInfo } = this.props;
     if (destination) {
       let request = {
         origin: new google.maps.LatLng(origin.lat, origin.lng),
@@ -20,7 +20,11 @@ export default class Map_Component extends Component {
         travelMode: 'WALKING'
       };
       directionsService.route(request, (response, status) => {
-        if (status == 'OK') directionsDisplay.setDirections(response);
+        if (status == 'OK') {
+          directionsDisplay.setDirections(response);
+          let {distance, duration} = response.routes[0].legs[0];
+          updateRouteInfo(distance.text, duration.text);
+        }
       });
     }
   }

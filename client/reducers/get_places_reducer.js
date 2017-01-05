@@ -13,6 +13,10 @@ const initialState = {
         longitude: -122.419415
       },
       display_address: []
+    },
+    routeInfo: {
+      distance: '',
+      duration: ''
     }
   }
 }
@@ -46,7 +50,10 @@ export default (state = initialState, action) => {
       })
 
     case 'SHOW_DETAIL':
-     return Object.assign({}, state, {showDetail: !state.showDetail})
+      return Object.assign({}, state, {showDetail: !state.showDetail})
+
+    case 'UPDATE_ROUTE_INFO':
+      return Object.assign({}, state, {singleListing: {...state.singleListing, ...action.routeInfo}})
 
     default:
       return state;
