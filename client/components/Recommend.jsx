@@ -9,20 +9,22 @@ import ListingDetail from './Recommend_subcomponents/listingDetail.jsx';
 import Map from '../containers/Map_Container.jsx';
 
 
-class Recommend extends Component {
+export default class Recommend extends Component {
 
   constructor(props) {
     super(props)
   }
 
   componentWillMount() {
-    let { singleListing, changeDestination } = this.props;
-    changeDestination({lat: singleListing.location.coordinate.latitude, lng: singleListing.location.coordinate.longitude});
+    let { changeDestination } = this.props;
+    let { latitude, longitude } = this.props.singleListing.location.coordinate;
+    changeDestination({lat: latitude, lng: longitude});
   }
 
   componentDidUpdate() {
-    let { singleListing, changeDestination } = this.props;
-    changeDestination({lat: singleListing.location.coordinate.latitude, lng: singleListing.location.coordinate.longitude});
+    let { changeDestination } = this.props;
+    let { latitude, longitude } = this.props.singleListing.location.coordinate;
+    changeDestination({lat: latitude, lng: longitude});
   }
 
   render() {
@@ -45,6 +47,3 @@ class Recommend extends Component {
     )
   }
 }
-
-
-export default Recommend;
