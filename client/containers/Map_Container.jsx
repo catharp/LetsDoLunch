@@ -10,16 +10,7 @@ class Map_Container extends Component {
   }
 
   render() {
-    return (
-        <Map_Component
-          zoom={this.props.zoom}
-          center={this.props.center}
-          changeBounds={this.props.changeBounds}
-          origin={this.props.origin}
-          changeOrigin={this.props.changeOrigin}
-          destination={this.props.destination}
-        />
-    );
+    return <Map_Component {...this.props} />
   }
 }
 
