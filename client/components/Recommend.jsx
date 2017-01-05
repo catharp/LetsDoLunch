@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import StarRating from 'react-bootstrap-star-rating';
 import { Glyphicon, Image } from 'react-bootstrap';
@@ -9,26 +9,41 @@ import ListingDetail from './Recommend_subcomponents/listingDetail.jsx';
 import Map from '../containers/Map_Container.jsx';
 
 
-const Recommend = ({ singleListing, rejectPlace, showDetail, detailVisible, changeDestination}) => {
+class Recommend extends Component {
 
-  changeDestination({lat: singleListing.location.coordinate.latitude, lng: singleListing.location.coordinate.longitude});
+  constructor(props) {
+    super(props)
+  }
 
-  return (
-    <div>
-      <div className='col-md-7'>
-        <Map />
-      </div>
-      <div className='col-md-5 single-rec'>
-        <CurrentListing onClick={() => showDetail()} {...singleListing}  />
-        <div> { detailVisible ? <ListingDetail {...singleListing} /> : null}
+  componentWillMount() {
+    let { singleListing, changeDestination } = this.props;
+    changeDestination({lat: singleListing.location.coordinate.latitude, lng: singleListing.location.coordinate.longitude});
+  }
+
+  componentDidUpdate() {
+    let { singleListing, changeDestination } = this.props;
+    changeDestination({lat: singleListing.location.coordinate.latitude, lng: singleListing.location.coordinate.longitude});
+  }
+
+  render() {
+    let { singleListing, rejectPlace, showDetail, detailVisible, changeDestination} = this.props;
+    return (
+      <div>
+        <div className='col-md-7'>
+          <Map />
         </div>
-        <div>
-          <RejectButton onClick={() => rejectPlace(singleListing)} />
-          <AcceptButton onClick={() => alert('Enjoy your lunch!')} />
+        <div className='col-md-5 single-rec'>
+          <CurrentListing onClick={() => showDetail()} {...singleListing}  />
+          <div> { detailVisible ? <ListingDetail {...singleListing} /> : null}
+          </div>
+          <div>
+            <RejectButton onClick={() => rejectPlace(singleListing)} />
+            <AcceptButton onClick={() => alert('Enjoy your lunch!')} />
+          </div>
         </div>
       </div>
-    </div>
-  )
+    )
+  }
 }
 
 
