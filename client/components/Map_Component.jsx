@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { GoogleMapLoader, GoogleMap, Marker } from 'react-google-maps';
 
+// instantiate google maps objects to display directions
 var directionsService = new google.maps.DirectionsService();
 var directionsDisplay = new google.maps.DirectionsRenderer();
 var map;
@@ -13,6 +14,8 @@ export default class Map_Component extends Component {
 
   componentDidUpdate() {
     let { origin, destination, updateRouteInfo } = this.props;
+
+    // if destination exists, display directions from origin to destination on map
     if (destination) {
       let request = {
         origin: new google.maps.LatLng(origin.lat, origin.lng),
@@ -23,6 +26,8 @@ export default class Map_Component extends Component {
         if (status == 'OK') {
           directionsDisplay.setDirections(response);
           let {distance, duration} = response.routes[0].legs[0];
+
+          //update route info in listing details
           updateRouteInfo(distance.text, duration.text);
         }
       });
@@ -32,37 +37,39 @@ export default class Map_Component extends Component {
   render() {
     let { zoom, center, changeBounds, origin, changeOrigin, destination } = this.props;
     return (
-      <div>
-        <GoogleMapLoader
-          containerElement={<div className='map' />}
-          googleMapElement={
-            <GoogleMap
-              ref={googleMap => {
-                if (googleMap) {
-                  directionsDisplay.setMap(map = googleMap.props.map)
-                }
-              }}
-              zoom={zoom}
-              center={center}
-              onBoundsChanged={() => {
-                changeBounds({
-                  zoom: map.zoom,
-                  center: {lat: map.center.lat(), lng: map.center.lng()}
-                })
-              }}
-              onClick={click => destination ? null : changeOrigin({lat: click.latLng.lat(), lng: click.latLng.lng()})}
-            >
-              {destination ?
+      <GoogleMapLoader
+        containerElement={<div className='map' />}
+        googleMapElement={
+          <GoogleMap
+            ref={googleMap => {
+              if (googleMap) {
+                // on load, identify map element for directions renderer to target
+                directionsDisplay.setMap(map = googleMap.props.map)
+              }
+            }}
+            zoom={zoom}
+            center={center}
+            onBoundsChanged={() => {
+              // update map state whenever a zoom or drag event occurs
+              changeBounds({
+                zoom: map.zoom,
+                center: {lat: map.center.lat(), lng: map.center.lng()}
+              })
+            }}
+            onClick={ // disable origin selecting when directions are already being displayed
+              click => destination ? null : changeOrigin({lat: click.latLng.lat(), lng: click.latLng.lng()})}
+          >
+            { // disable map markers when directions are being displayed
+              destination ?
                 null :
                 <Marker
                 key={origin.lat + '' + origin.lng}
                 defaultPosition={origin}
                 />
-              }
-            </GoogleMap>
-          }
-        />
-      </div>
+            }
+          </GoogleMap>
+        }
+      />
     );
   }
 }
