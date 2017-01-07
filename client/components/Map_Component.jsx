@@ -4,6 +4,7 @@ import { GoogleMapLoader, GoogleMap, Marker } from 'react-google-maps';
 // instantiate google maps objects to display directions
 var directionsService = new google.maps.DirectionsService();
 var directionsDisplay = new google.maps.DirectionsRenderer();
+var placesService;
 var map;
 
 export default class Map_Component extends Component {
@@ -13,11 +14,23 @@ export default class Map_Component extends Component {
   }
 
   componentDidUpdate() {
-    let { origin, destination, updateRouteInfo } = this.props;
+    let { origin, destination, updatePhoto, updateRouteInfo } = this.props;
 
     // if destination exists, display directions from origin to destination on map
     if (destination) {
+      console.log(destination);
       let request = {
+        location: new google.maps.LatLng(destination.lat, destination.lng),
+        radius: '100',
+        query: destination.name
+      }
+      placesService.textSearch(request, (places, status) => {
+        if (status == google.maps.places.PlacesServiceStatus.OK) {
+          updatePhoto(places[0].photos[0].getUrl({maxWidth: 400, maxHeight: 400}));
+        }
+      })
+
+      request = {
         origin: new google.maps.LatLng(origin.lat, origin.lng),
         destination: new google.maps.LatLng(destination.lat, destination.lng),
         travelMode: 'WALKING'
@@ -45,6 +58,7 @@ export default class Map_Component extends Component {
               if (googleMap) {
                 // on load, identify map element for directions renderer to target
                 directionsDisplay.setMap(map = googleMap.props.map)
+                placesService = new google.maps.places.PlacesService(map)
               }
             }}
             zoom={zoom}

@@ -1,4 +1,6 @@
 
+import fetch from 'isomorphic-fetch';
+
 let listingIndex = 1;
 
 export const rejectListing = (listing) => ({
@@ -14,4 +16,9 @@ export const toggleDetail = () => ({
 export const updateRouteInfo = (distance, duration) => ({
   type: 'UPDATE_ROUTE_INFO',
   routeInfo: {distance, duration}
+})
+
+export const updatePhoto = (photo) => ({
+  type: 'UPDATE_PHOTO',
+  photo
 })

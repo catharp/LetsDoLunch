@@ -52,6 +52,9 @@ export default (state = initialState, action) => {
     case 'SHOW_DETAIL':
       return Object.assign({}, state, {showDetail: !state.showDetail})
 
+    case 'UPDATE_PHOTO':
+      return Object.assign({}, state, {singleListing: {...state.singleListing, image_url: action.photo}})
+
     case 'UPDATE_ROUTE_INFO':
       return Object.assign({}, state, {singleListing: {...state.singleListing, ...action.routeInfo}})
 

@@ -30,7 +30,7 @@ class Navbar extends Component {
 const mapDispatchToProps = (dispatch) => ({
   feelingLucky: () => {
     dispatch(fetchPlaces(''))
-    return fetch('/api/places?term=gold+club+entertainment&location=soma+san+francisco')
+    return fetch('/api/yelp?term=gold+club+entertainment&location=soma+san+francisco')
     .then(response => response.json())
     .then(json => {
       dispatch(receivePlaces('', json));

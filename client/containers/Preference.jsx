@@ -90,7 +90,7 @@ const mapDispatchToProps = (dispatch) => ({
     }
 
     console.log('all cuisines selected: ', tempterm)
-    return fetch('/api/places?term='+tempterm)
+    return fetch('/api/yelp?term='+tempterm)
     .then(response => response.json())
     .then(json => {
       dispatch(receivePlaces(query, json));//TODO: update json to filteredResults when multi-apiCalls are established
@@ -119,4 +119,3 @@ export default Preference
 ///hiding neighborhood for now ///
 // <div className="col-md-11"><Neighborhood changeNeighborhood={this.props.changeNeighborhood} neighborhoodStatus={this.props.preferenceState.neighborhoodStatus}/></div>
 //<div className="col-md-11"><Lucky feelingLucky={this.props.feelingLucky}/></div>
-

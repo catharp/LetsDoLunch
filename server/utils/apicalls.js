@@ -14,7 +14,7 @@ module.exports.googleMapsLoader = function() {
   // build query string for api call
   let qs = {
     key: process.env.GOOGLE_MAPS_API_KEY,
-    libraries: 'geometry,place,visualization'
+    libraries: 'geometry,place,places,visualization'
   }
 
   // return a promise
@@ -38,7 +38,7 @@ module.exports.googlePlacesNearby = function(query) {
     if (location && location.address) {
       let {address} = location;
 
-      googleGeocode({address})
+      module.exports. googleGeocode({address})
       .then(data => {
         let {results:[{geometry, geometry:{location, location:{lat, lng}}}]} = JSON.parse(data);
         resolve(`${lat},${lng}`);
@@ -70,8 +70,7 @@ module.exports.googlePlacesNearby = function(query) {
     };
 
     // Returning a promise
-    return request.get({url, qs});
-
+    return request.get({url, qs})
   })
   .catch(err => console.log('googlePlacesNearby Error:', err));
 
@@ -92,7 +91,7 @@ module.exports.googlePlacesDetails = function(query) {
 
 }
 
-function googleGeocode(query) {
+module.exports.googleGeocode = function(query) {
   let {address} = query;
 
   let url = 'https://maps.google.com/maps/api/geocode/json';
