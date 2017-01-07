@@ -7,7 +7,7 @@ import { Button } from 'react-bootstrap';
 
 import Lucky from '../components/Preference_subcomponent/Lucky.jsx';
 
-import { fetchPlaces, receivePlaces, filterPlaces } from '../actions/action_get_places';
+import { setQuery, receivePlaces, filterPlaces } from '../actions/action_get_places';
 
 class Navbar extends Component {
   render() {
@@ -29,13 +29,8 @@ class Navbar extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   feelingLucky: () => {
-    dispatch(fetchPlaces(''))
-    return fetch('/api/yelp?term=gold+club+entertainment&location=soma+san+francisco')
-    .then(response => response.json())
-    .then(json => {
-      dispatch(receivePlaces('', json));
-      browserHistory.push('/recommend')
-    })
+    dispatch(setQuery('Gold Club'))
+    browserHistory.push('/recommend')
   }
 })
 

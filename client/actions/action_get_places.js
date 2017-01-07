@@ -1,8 +1,7 @@
 
-export const fetchPlaces = function(query) {
-  console.log('in fetch places!')
+export const setQuery = function(query) {
   return {
-    type: 'FETCH_PLACES',
+    type: 'SET_QUERY',
     query
   }
 }
