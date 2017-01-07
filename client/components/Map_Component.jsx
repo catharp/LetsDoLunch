@@ -4,8 +4,7 @@ import { GoogleMapLoader, GoogleMap, Marker } from 'react-google-maps';
 // instantiate google maps objects to display directions
 var directionsService = new google.maps.DirectionsService();
 var directionsDisplay = new google.maps.DirectionsRenderer();
-var placesService;
-var map;
+var map, placesService, previousDestination;
 
 export default class Map_Component extends Component {
 
@@ -16,9 +15,10 @@ export default class Map_Component extends Component {
   componentDidUpdate() {
     let { origin, destination, updatePhoto, updateRouteInfo } = this.props;
 
-    // if destination exists, display directions from origin to destination on map
-    if (destination) {
-      console.log(destination);
+    if (destination  && destination.name !== previousDestination) {
+      previousDestination = destination.name;
+
+      // update listing photo from google maps' places library
       let request = {
         location: new google.maps.LatLng(destination.lat, destination.lng),
         radius: '100',
@@ -30,6 +30,7 @@ export default class Map_Component extends Component {
         }
       })
 
+      // display directions from origin to destination on map
       request = {
         origin: new google.maps.LatLng(origin.lat, origin.lng),
         destination: new google.maps.LatLng(destination.lat, destination.lng),
