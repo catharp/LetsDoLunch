@@ -24,39 +24,19 @@ const initialState = {
 export default (state = initialState, action) => {
   switch(action.type) {
     case 'FETCH_PLACES':
-      return Object.assign({}, state, {isFetching: true})
+      return {...state, isFetching: true}
 
-    case 'RECEIVE_PLACES':
-    console.log('action.places', action.places)
-      return Object.assign({}, state, {
-        isFetching: false,
-        places: action.places,
-        singleListing: action.places[0]
-      })
+    case 'STOP_FETCHING':
+      return {...state, isFetching: false}
 
-//NOT USING until $ and time can be filtered
-    case 'FILTER_PLACES':
-      console.log('action.places / filter', action.places)
-      return Object.assign({}, state, {
-        isFetching: false,
-        places: action.places,
-        singleListing: action.places[0]
-      })
+    case 'UPDATE_PLACES':
+      return {...state, places: action.places, singleListing: action.places[0]}
 
     case 'REJECT_PLACE':
-      return Object.assign({}, state, {
-        singleListing: state.places[action.idx]
-        //nothing happens when we run out of places...
-      })
+      return {...state, singleListing: state.places[action.idx]
 
     case 'SHOW_DETAIL':
-      return Object.assign({}, state, {showDetail: !state.showDetail})
-
-    case 'UPDATE_PHOTO':
-      return Object.assign({}, state, {singleListing: {...state.singleListing, image_url: action.photo}})
-
-    case 'UPDATE_ROUTE_INFO':
-      return Object.assign({}, state, {singleListing: {...state.singleListing, ...action.routeInfo}})
+      return {...state, showDetail: !state.showDetail}
 
     default:
       return state;
