@@ -25,7 +25,7 @@ export default class Map_Component extends Component {
         query: destination.name
       }
       placesService.textSearch(request, (places, status) => {
-        if (status == google.maps.places.PlacesServiceStatus.OK) {
+        if (status === 'OK' && places[0].photos) {
           updatePhoto(places[0].photos[0].getUrl({maxWidth: 400, maxHeight: 400}));
         }
       })
