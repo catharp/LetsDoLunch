@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-//start of testing feel lucky component
 import fetch from 'isomorphic-fetch'
 import { connect } from 'react-redux';
 import { Router, browserHistory } from 'react-router';
 import { Button } from 'react-bootstrap';
 
-import Lucky from '../components/Preference_subcomponent/Lucky.jsx';
+import Lucky from '../containers/Lucky.jsx';
 
 import { setQuery, receivePlaces, filterPlaces } from '../actions/action_get_places';
 
