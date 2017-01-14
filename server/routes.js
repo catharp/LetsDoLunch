@@ -11,10 +11,6 @@ module.exports = function(app) {
 
   app.get('/api/photo', handler.getPhoto);
 
-  app.get('/db/homelocation', handler.getHomeLocation);
-
-  app.post('/db/homelocation', handler.setHomeLocation);
-
   app.get('/db/userpreferences', handler.getUserPreferences);
 
   app.delete('/db/userpreferences', handler.deleteUserPreference);
@@ -22,6 +18,8 @@ module.exports = function(app) {
   app.post('/db/userpreferences', handler.addUserPreference);
 
   app.delete('/db/userlistings', handler.deleteUserListing);
+
+  app.post('/db/homelocation', handler.addUserListing.bind(null, 'home'));
 
   app.post('/db/userfavorites', handler.addUserListing.bind(null, 'favorite'));
 
@@ -36,8 +34,6 @@ module.exports = function(app) {
   app.post('/db/movetofavorites', handler.moveListing.bind(null, 'favorite'));
 
   app.post('/db/users', handler.addUser);
-
-  app.post('/search/preference', handler.getPreference);
 
   app.post('/db/adduserpreference', handler.addUserPreference);
 

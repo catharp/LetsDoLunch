@@ -90,14 +90,8 @@ const getHomeLocation = function(req, res) {
 }
 
 const setHomeLocation = function(req, res) {
-  console.log('in handler...');
   dbHandler.setHomeLocation(req.user, req.body)
-  .then(data => res.sendStatus(201))
   .catch(err => console.error(err))
-}
-
-const getPreference = function(req,res) {
-  res.send();
 }
 
 const yelpNearbySearch = function(req, res) {
@@ -165,16 +159,25 @@ const getUserPreferences = function(req, res) {
 
 const addUserListing = function(type, req, res) {
   let { body } = req;
+
+
   let user = findUserFromRequest(req);
+
+  if (type === "home") {
+    body.name = "Home: " + user.email;
+  }
 
   // Map lat/lng to where they are matched in the database so they will be stored
   Object.assign(body, body.geometry.location);
+  console.log(body);
 
   dbHandler.addListing(body)
   // Add listing in database if it doesn't exist (addListing will return the listing id)
   .then((listingId) => dbHandler.addUserListing(user, listingId, type))
   // Add listing in junction table
-  .then((data) => res.sendStatus(200))
+  .then((data) => {
+    res.sendStatus(201)
+  })
   .catch(err => {res.sendStatus(500); console.log('Error in addUserListing:', err); });
 }
 
@@ -257,7 +260,6 @@ module.exports = {
   getPhoto,
   getHomeLocation,
   setHomeLocation,
-  getPreference,
   yelpNearbySearch,
   getUserPreferences,
   addUserListing,
