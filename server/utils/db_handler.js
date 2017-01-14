@@ -70,11 +70,11 @@ const addListing = function(listing) {
       // Ensures that each category exists in the database, then adds each category listed
       // in the listing categories array to the preferences_listings junction table.
       Promise.all(
-        [yelpCategory].map(category => (
+        ([yelpCategory]||[]).map(category => (
           addListingPreference(data.insertId, {
             name: category,
             type: 'cuisine'
-          })
+          }).catch(() => console.error('y\'all fucked up...'))
         ))
       )
       // Then we resolve the promise with our listing id.
@@ -94,8 +94,22 @@ const getHomeLocation = function(user) {
 const setHomeLocation = function(user, location) {
   console.log('user: ', user)
   console.log('location: ', location)
+
+  let name = user.email + '\'s Home';
+
+  let { lat, lng } = location
+
+
+
+  // let homeExists = `SELECT id FROM listings WHERE name="${(user.fbtoken || user.username) + 'Home'}";`
+  // let addHomeToListings = `INSERT INTO listings SET ?`
+  // let changeHomeListing = `UPDATE listings SET lat=${lat}, lng=${lng} WHERE name="${(user.fbtoken || user.username) + 'Home'}";`
+
   return new Promise((resolve, reject) => {
-    resolve()
+    checkingQuery(homeExists)
+    .then(() => query(addHomeToListings, {lat, lng}))
+    .then(data => resolve(data.insertId))
+    .catch(() => query(changeHomeListing))
   })
 }
 

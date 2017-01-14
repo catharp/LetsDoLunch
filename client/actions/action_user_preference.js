@@ -26,11 +26,10 @@ export const userPreferenceMouseLeave = ({ prefType, index }) => {
 export const setHome = (location) => (
   fetch('/db/homelocation', {
     method: 'POST',
-    body: JSON.stringify(location),
+    body: JSON.stringify({geometry: { location }}),
     headers: {'Content-type': 'application/json'},
     credentials: 'same-origin'
   })
-  .then(res => console.log(res.json()))
 )
 
 export const getUserPreferences = () => (
@@ -38,6 +37,7 @@ export const getUserPreferences = () => (
     credentials: 'same-origin'
   })
   .then(data => data.json())
+  .then(json => {console.log(json); return json})
   .then(json => dispatch(receiveUserPreferences(json)))
 )
 
