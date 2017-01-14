@@ -44,6 +44,7 @@ class Profile extends Component {
       user: {
         username, email
       },
+      home,
       removeUserPreference, removeUserListing,
       mouseEnter, mouseLeave,
       moveToBlacklist, moveToFavorites, submitPrefForm
@@ -59,7 +60,7 @@ class Profile extends Component {
           <p>{ email ? `email: ${ email }` : "No email provided yet!" }</p>
           <p>home location:</p>
           <Map useHome={true} />
-          <Button bsStyle='info' onClick={setHome}>set home location</Button>
+          <Button bsStyle='info' onClick={setHome.bind(null, home)}>set home location</Button>
 
         </div>
         <div className={ columnClassString(4) }>
@@ -109,9 +110,10 @@ class Profile extends Component {
   }
 }
 
-const mapStateToProps = ({ userPreferences, user }) => ({
-  prefs: userPreferences,
-  user: user
+const mapStateToProps = (state) => ({
+  prefs: state.userPreferences,
+  user: state.user,
+  home: state.map.home
 })
 
 const mapDispatchToProps = (dispatch) => ({

@@ -90,6 +90,7 @@ const getHomeLocation = function(req, res) {
 }
 
 const setHomeLocation = function(req, res) {
+  console.log('in handler...');
   dbHandler.setHomeLocation(req.user, req.body)
   .then(data => res.sendStatus(201))
   .catch(err => console.error(err))

@@ -24,12 +24,13 @@ export const userPreferenceMouseLeave = ({ prefType, index }) => {
 }
 
 export const setHome = (location) => (
-  dispatch => fetch('db/homelocation'), {
+  fetch('/db/homelocation', {
     method: 'POST',
     body: JSON.stringify(location),
     headers: {'Content-type': 'application/json'},
     credentials: 'same-origin'
-  }
+  })
+  .then(res => console.log(res.json()))
 )
 
 export const getUserPreferences = () => (
